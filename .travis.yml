@@ -10,7 +10,4 @@ android:
   licenses:
     - '.+'
 script:
-  # Sonatype bypass
-  - echo "nexusUsername=dummy" >> library/gradle.properties
-  - echo "nexusPassword=dummy" >> library/gradle.properties
   - ./gradlew clean assemble check
