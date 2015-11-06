@@ -3,11 +3,9 @@ sudo: false
 jdk: openjdk7
 android:
   components:
-    - build-tools-23.0.1
+    - build-tools-23.0.2
     - extra-android-support
     - extra-android-m2repository
     - android-23
   licenses:
     - '.+'
-script:
-  - ./gradlew clean assemble check
