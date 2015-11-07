@@ -3,10 +3,11 @@ sudo: false
 jdk: oraclejdk8
 android:
   components:
-    - build-tools-21.1.1
-    - platform-tools
+    - build-tools-23.0.2
     - extra-android-support
     - extra-android-m2repository
-    - android-21
+    - android-23
   licenses:
     - '.+'
+  script:
+    - ./gradlew assemble
