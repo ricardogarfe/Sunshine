@@ -60,6 +60,9 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Void> {
                 return null;
             }
             forecastJsonStr = builder.toString();
+
+            Log.e(LOG_TAG, "Forecast JSON String:\t" +forecastJsonStr);
+
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
