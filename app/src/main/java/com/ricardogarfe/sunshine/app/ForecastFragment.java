@@ -55,6 +55,12 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.forecastfragment, menu);
     }
@@ -65,15 +71,20 @@ public class ForecastFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_refresh) {
-            FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String location = prefs.getString(getString(R.string.pref_location_key),
-                    getString(R.string.pref_location_default));
-
-            fetchWeatherTask.execute(location);
+            updateWeather();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateWeather() {
+        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = prefs.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+
+        fetchWeatherTask.execute(location);
     }
 
     @Override
@@ -86,8 +97,6 @@ public class ForecastFragment extends Fragment {
                 R.id.list_item_forecast,
                 new ArrayList<String>()
         );
-
-        new FetchWeatherTask().execute(DUMMY_POSTALCODE);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
