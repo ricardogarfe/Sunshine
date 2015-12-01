@@ -24,10 +24,6 @@ public class ForecastFragment extends Fragment {
 
     private final String LOG_TAG = ForecastFragment.class.getSimpleName();
 
-    private final String DUMMY_POSTALCODE = "46001,ES";
-
-    private FetchWeatherTask fetchWeatherTask;
-
     private ArrayAdapter<String> mForecastAdapter;
 
     public ForecastFragment() {
@@ -68,8 +64,7 @@ public class ForecastFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String location = prefs.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
-
-        fetchWeatherTask.execute(location);
+        weatherTask.execute(location);
     }
 
     @Override
