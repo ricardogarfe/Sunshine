@@ -281,9 +281,31 @@ public class WeatherProvider extends ContentProvider {
     @Override
     public int update(
             Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        // Student: This is a lot like the delete function.  We return the number of rows impacted
-        // by the update.
-        return 0;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsUpdated;
+
+        // this makes delete all rows return the number of rows deleted
+        if (null == selection) selection = "1";
+        switch (match) {
+            case WEATHER:
+                rowsUpdated = db.update(
+                        WeatherContract.WeatherEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case LOCATION:
+                rowsUpdated = db.update(
+                        WeatherContract.LocationEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        // Because a null deletes all rows
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        db.close();
+        return rowsUpdated;
     }
 
     @Override
