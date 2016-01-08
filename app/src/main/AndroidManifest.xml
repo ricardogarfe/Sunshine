@@ -38,6 +38,9 @@
         <provider
             android:authorities="com.ricardogarfe.sunshine.app"
             android:name=".data.WeatherProvider" />
+
+        <service android:name=".service.SunshineService" />
+
     </application>
 
 </manifest>
